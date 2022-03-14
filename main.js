@@ -8,11 +8,11 @@ var btn = document.getElementById('btn');
 btn.addEventListener('click', function () {
     if (userName.value.length > 15) {
         userName.value="";
-        warnRes("用户名过长");
+        warnRes("你的昵称太长啦……！");
       	return;
     } else if(userName.value.length == 0){
 		userName.value="";
-		warnRes("用户名不能为空");
+		warnRes("请填一下你的昵称喔！");
       	return;
     }else if (parseFloat(userDonate.value) > 9999.99 || parseFloat(userDonate.value) < 0.01 || userDonate.value=="") {
         userDonate.value="";
@@ -40,13 +40,13 @@ signUpButton.onclick = function () {
 }
 
 signInButton.onclick = function () {
-    self.location = 'https://xingjiahui.top/donate';
+    self.location = 'https://YOUR.DOMAIN.com/donate';
 }
 
 function warnRes(res) {
     swal(
         res,
-        '请检查数据格式！',
+        '检查一下是不是没填或者填错了吧！',
         'warning'
     );
 }
@@ -62,7 +62,7 @@ function errorRes(res) {
 function successRes(res) {
     swal(
         res,
-        '感谢您的支持！',
+        '谢谢投喂！投喂记录已经更新到列表中了喔！',
         'success'
     );
 }

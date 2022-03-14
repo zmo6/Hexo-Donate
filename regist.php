@@ -1,47 +1,50 @@
 <?php
     header("content-type:text/html;charset=gb2312"); 
-        //»ñÈ¡À´×ÔÎÊ¾íµÄÄÚÈİ
+    include_once("mail/test.php"); //å¢åŠ é‚®ä»¶æé†’
+        //è·å–æ¥è‡ªé—®å·çš„å†…å®¹
         $user_name = $_POST['user_name'];
         $user_url = $_POST['user_url'];
         $user_donate = $_POST['user_donate'];
-	$pay_way = $_POST['pay_way'];
+        $pay_way = $_POST['pay_way'];
+        $donate_msg = $_POST['donate_msg'];
 
-        //Êı¾İ¿âĞèÒªµÄÄÚÈİ
-        //»ñÈ¡ip https://blog.csdn.net/benben0729/article/details/87859314
+        //æ•°æ®åº“éœ€è¦çš„å†…å®¹
+        //è·å–ip https://blog.csdn.net/benben0729/article/details/87859314
         $ip = ($_SERVER["HTTP_VIA"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : $_SERVER["REMOTE_ADDR"];
         $user_ip = ($ip) ? $ip : $_SERVER["REMOTE_ADDR"];
 
-        date_default_timezone_set("Asia/Shanghai"); //»ñÈ¡ÌîĞ´Ê±¼ä
+        date_default_timezone_set("Asia/Shanghai"); //è·å–å¡«å†™æ—¶é—´
         $donate_time=date('Y-m-d H:i:s');
 
-        $donate_confirm='NO'; //È·ÈÏĞÅÏ¢Ä¬ÈÏÎª'NO'
+        $donate_confirm='NO'; //ç¡®è®¤ä¿¡æ¯é»˜è®¤ä¸º'NO'
 
-        //Á¬½ÓÊı¾İ¿â
-        $conn = new mysqli(localhost,'Êı¾İ¿âÓÃ»§Ãû','Êı¾İ¿âÃÜÂë','Êı¾İ¿âÃû');
+        //è¿æ¥æ•°æ®åº“
+        $conn = new mysqli(localhost,'donate_dominoh_c','dmmhDWYZW8raNaAe','donate_dominoh_c');
         mysqli_set_charset($conn,"utf8");
-        if ($conn->connect_error){ //Á¬½ÓÊ§°Üjavascript:;
-            //echo 'Êı¾İ¿âÁ¬½ÓÊ§°Ü£¬ÇëÁªÏµ²©Ö÷£¡';
-          	echo '<script>window.parent.errorRes("Êı¾İ¿âÁ¬½ÓÊ§°Ü£¬ÇëÁªÏµ²©Ö÷£¡");</script>';
+        if ($conn->connect_error){ //è¿æ¥å¤±è´¥javascript:;
+            //echo 'æ•°æ®åº“è¿æ¥å¤±è´¥ï¼Œè¯·è”ç³»åšä¸»ï¼';
+          	echo '<script>window.parent.errorRes("æäº¤å¤±è´¥äº†ï¼Œè¯·è”ç³»ä¸€ä¸‹åšä¸»ï¼Œè°¢è°¢ï¼");</script>';
             exit(0);
-        }else { //Á¬½Ó³É¹¦
-            //²éÑ¯¸Ãip´òÉÍ´ÎÊı¡¢±ÜÃâ¶ñÒâË¢È¡Êı¾İ
+        }else { //è¿æ¥æˆåŠŸ
+            //æŸ¥è¯¢è¯¥ipæ‰“èµæ¬¡æ•°ã€é¿å…æ¶æ„åˆ·å–æ•°æ®
             $sql = "select count(*) from donate_info where user_ip = '$user_ip'";
             $result = $conn->query($sql);
           	while ($row = $result->fetch_array(MYSQLI_ASSOC)){
-            	//ÒòÎªÊ¹ÓÃµÄÊÇ¹ØÁªÊı×é·½Ê½»ñÈ¡Ã¿Ò»ĞĞÊı¾İ£¬ËùÒÔÖ»ÄÜÊ¹ÓÃ¹ØÁªÊı×éµÄ·½·¨¶ÁÈ¡Êı¾İ£¬²»ÄÜÊ¹ÓÃË÷ÒıµÄ·½Ê½¶ÁÈ¡Êı¾İ¡£
+            	//å› ä¸ºä½¿ç”¨çš„æ˜¯å…³è”æ•°ç»„æ–¹å¼è·å–æ¯ä¸€è¡Œæ•°æ®ï¼Œæ‰€ä»¥åªèƒ½ä½¿ç”¨å…³è”æ•°ç»„çš„æ–¹æ³•è¯»å–æ•°æ®ï¼Œä¸èƒ½ä½¿ç”¨ç´¢å¼•çš„æ–¹å¼è¯»å–æ•°æ®ã€‚
             	$ip_num=$row['count(*)'];
           	}
-            if ($ip_num>=5) {
-                //echo '<script>alert("ÉÏ´«Ê§°Ü£¬×Ü´òÉÍ´ÎÊı³¬ÏŞ£¡");history.go(-1);</script>';
-              	echo '<script>window.parent.errorRes("ÉÏ´«Ê§°Ü£¬×Ü´òÉÍ´ÎÊı³¬ÏŞ£¡");</script>';
+            if ($ip_num>=15) {  //è¿™é‡Œè®¾ç½®åŒipæœ€é«˜æ‰“èµæ¬¡æ•°
+                //echo '<script>alert("ä¸Šä¼ å¤±è´¥ï¼Œæ€»æ‰“èµæ¬¡æ•°è¶…é™ï¼");history.go(-1);</script>';
+              	echo '<script>window.parent.errorRes("æäº¤å¤±è´¥ï¼Œä½ æäº¤å¤ªå¤šæ¬¡äº†å§ï¼");</script>';
             } else {
-                $sql_insert = "insert into Êı¾İ¿âÃû.`donate_info` (`user_name`, `user_url`, `user_donate`,`pay_way`, `user_ip`, `donate_time`, `donate_confirm`) VALUES ('$user_name', '$user_url', '$user_donate', '$pay_way', '$ip', '$donate_time', '$donate_confirm')";
+                $sql_insert = "insert into donate_dominoh_c.`donate_info` (`user_name`, `user_url`, `user_donate`,`pay_way`, `user_ip`, `donate_time`, `donate_confirm`, `donate_msg`) VALUES ('$user_name', '$user_url', '$user_donate', '$pay_way', '$ip', '$donate_time', '$donate_confirm', '$donate_msg')";
              	$res_insert = $conn->query($sql_insert);
                 if ($res_insert) {
                  	//echo "<script>alert($user_name);</script>";
-                  	echo '<script>window.parent.successRes("µ¼ÈëÊı¾İ¿â³É¹¦£¡");</script>';
+                  	echo '<script>window.parent.successRes("æäº¤æˆåŠŸï¼åšä¸»ä¼šå°½å¿«ç¡®è®¤çš„~");</script>';
+                 	send_mail(); //å‘é€æé†’é‚®ä»¶
                 } else {
-                    echo '<script>window.parent.warnRes("Çë¼ì²éÊı¾İ¸ñÊ½ÊÇ·ñÕıÈ·£¡");</script>';
+                    echo '<script>window.parent.warnRes("è¯·æ£€æŸ¥ä¸€ä¸‹æ˜¯ä¸æ˜¯å“ªé‡Œå¡«é”™å•¦ï¼");</script>';
                 }
             }
         }

@@ -1,26 +1,27 @@
 <?php
   header("content-type:text/html;charset=gb2312");
     header('Access-Control-Allow-Origin:*');
-    $servername = "localhost";
-    $username = "Êı¾İ¿âÓÃ»§Ãû";
-    $password = "Êı¾İ¿âÃÜÂë";
-    $dbname = "Êı¾İ¿âÃû";
-    // ´´½¨Á¬½Ó
+    $servername = "æ•°æ®åº“IP";
+    $username = "æ•°æ®åº“ç”¨æˆ·å";
+    $password = "æ•°æ®åº“å¯†ç ";
+    $dbname = "æ•°æ®åº“å";
+    // åˆ›å»ºè¿æ¥
     $con =mysqli_connect($servername, $username, $password, $dbname);
     mysqli_set_charset($con,"utf8");
 
-    // ¼ì²âÁ¬½Ó
-    $sql = "select `user_name`, `user_url`, `user_donate`, `pay_way`, `donate_confirm`, `donate_out` from donate_info order by `donate_id` asc";
+    // æ£€æµ‹è¿æ¥
+    // æ·»åŠ ç•™è¨€
+    $sql = "select `user_name`, `user_url`, `user_donate`, `pay_way`, `donate_confirm`, `donate_out`, `donate_msg` from donate_info order by `donate_id` asc";
     $result = mysqli_query($con,$sql);
     if (!$result) {
         printf("Error: %s\n", mysqli_error($con));
         exit();
     }
 
-	//Êä³öÊı¾İ¿âÖĞµÄÊı¾İ
+	//è¾“å‡ºæ•°æ®åº“ä¸­çš„æ•°æ®
     $jarr = array();
     while ($row = $result->fetch_array(MYSQLI_ASSOC)){
-        //ÒòÎªÊ¹ÓÃµÄÊÇ¹ØÁªÊı×é·½Ê½»ñÈ¡Ã¿Ò»ĞĞÊı¾İ£¬ËùÒÔÖ»ÄÜÊ¹ÓÃ¹ØÁªÊı×éµÄ·½·¨¶ÁÈ¡Êı¾İ£¬²»ÄÜÊ¹ÓÃË÷ÒıµÄ·½Ê½¶ÁÈ¡Êı¾İ¡£
+        //å› ä¸ºä½¿ç”¨çš„æ˜¯å…³è”æ•°ç»„æ–¹å¼è·å–æ¯ä¸€è¡Œæ•°æ®ï¼Œæ‰€ä»¥åªèƒ½ä½¿ç”¨å…³è”æ•°ç»„çš„æ–¹æ³•è¯»å–æ•°æ®ï¼Œä¸èƒ½ä½¿ç”¨ç´¢å¼•çš„æ–¹å¼è¯»å–æ•°æ®ã€‚
       	//`user_name`, `user_url`, `user_donate`, `user_ip`, `donate_time`, `donate_confirm`
        	// $user_name = $row['user_name'];
       	//$user_url = $row['user_url'];
@@ -30,8 +31,8 @@
         //echo "$user_name:$user_url<br />";
     }
 
-    //echo '±àÂëºóµÄjsonÊı¾İ£º';
-    echo $str=json_encode($jarr);//½«Êı×é½øĞĞjson±àÂë
+    //echo 'ç¼–ç åçš„jsonæ•°æ®ï¼š';
+    echo $str=json_encode($jarr);//å°†æ•°ç»„è¿›è¡Œjsonç¼–ç 
 
     mysqli_close($con);
 ?>

@@ -13,9 +13,9 @@ body{
 }
 button {
     outline: none;
-    border: 1px solid #FF4B2B;
+    border: 1px solid #228B22;
     border-radius: 20px;
-    background-color: #FF4B2B;
+    background-color: #228B22;
     padding: 10px 40px;
     font-size: 12px;
     text-transform: uppercase;
@@ -25,10 +25,11 @@ button {
 }
 h1 {
     text-transform: capitalize;
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 15px;
 }
 p{
+    font-size: 80%;
     margin: 10px 0 30px;
 }
 button:active {
@@ -60,7 +61,6 @@ button:active {
     height: 100%;
     width: 50%;
     padding: 0 40px;
-    transition: all .65s ease-in-out;
 }
 .form-container form{
     width: 100%;
@@ -85,10 +85,10 @@ button:active {
     z-index: 10;
 }
 .sign-in-img{
-    background-image: url("https://cdn.jsdelivr.net/gh/xingjiahui/CDN@latest/2020/05/27/bc207df0b83338454ed6b3aca3a4e1ec.png");
-    width: 50%;
-    height: 50%;
-    transform: translate(10%,-5%);
+    background-image: url("https://bu.dusays.com/2021/12/16/657ecd8f4ec05.gif");
+    background-repeat: no-repeat;
+    width: 35%;
+    height: 30%;
 }
 .social-container {
     display: flex;
@@ -125,7 +125,7 @@ button:active {
     left: -100%;
     width: 200%;
     height: 100%;
-    background: linear-gradient(to right, #FF4B2D, #FF426B);
+    background: linear-gradient(to right, #228B22, #006400);
 }
 
 .overlay-penal {

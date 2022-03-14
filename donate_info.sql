@@ -32,6 +32,7 @@ CREATE TABLE `donate_info` (
   `donate_time` datetime DEFAULT NULL,
   `donate_out` varchar(100) DEFAULT NULL,
   `donate_confirm` varchar(10) DEFAULT NULL,
+  `donate_msg` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`donate_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

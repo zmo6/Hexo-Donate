@@ -5,23 +5,26 @@
  * Last Update: 2020/6/4
  */
 //通过get请求，获取getJsonData.php文件从数据库中获取的数据
-$.get("域名/getJsonData.php", function getData(data) {
+$.get("https://YOURDOMAIN.com/getJsonData.php", function getData(data) {
     //强转jsSon类型，便于操作数据
     var donationInfo = JSON.parse(data);
     //获取table标签，将获取的数据插入
     var donate_tbody = $("table")[0];
     //构造字符串
-    var temp = '<tr><td align="center"><a href="{url}" target="_blank" rel="noopener">{name}</a></td><td align="center">{pay_way}</td><td align="center">{userdonate}</td><td align="center">{donate_out}</td></tr>';
+    //添加留言
+    var temp = '<tr><td align="center"><a href="{url}" target="_blank" rel="noopener">{name}</a></td><td align="center">{pay_way}</td><td align="center">{userdonate}</td><td align="center">{donate_out}</td><td align="center">{donate_msg}</td></tr>';
     var STR = "<tbody>";
     for (var i = 0; i < donationInfo.length;
          i++) {
-        var str = temp.replace("{url}", donationInfo[i].user_url).replace("{name}", donationInfo[i].user_name).replace("{pay_way}", donationInfo[i].pay_way).replace("{userdonate}", donationInfo[i].user_donate);
+        //添加留言
+        var str = temp.replace("{url}", donationInfo[i].user_url).replace("{name}", donationInfo[i].user_name).replace("{pay_way}", donationInfo[i].pay_way).replace("{userdonate}", donationInfo[i].user_donate).replace("{donate_msg}", donationInfo[i].donate_msg);
         if (donationInfo[i].donate_confirm == "NO") {
-            str = str.replace("{donate_out}", "待核实");
+            str = str.replace("{donate_out}", "待确认");
         } else {
-            str = str.replace("{donate_out}", "已核实");
+            str = str.replace("{donate_out}", "投喂成功");
         }
-        STR += str
+        //将投喂记录由新到旧排列
+        STR = str + STR
     }
     STR += "</tbody>";
     //将上面构造的字符串插入到table标签中
@@ -30,7 +33,7 @@ $.get("域名/getJsonData.php", function getData(data) {
 });
 function beautiful() {
     //样式美化
-    console.log("你好！");
+    //console.log("你好！");
     var arrayList = document.getElementsByTagName("tr");
     var pageText = document.getElementsByTagName("p")[0].innerHTML;
     var personNum = arrayList.length - 1, sumDonate = 0;
@@ -46,7 +49,7 @@ function beautiful() {
         }
         document.getElementsByTagName("tr")[i].getElementsByTagName("td")[3].innerHTML = "";
         console.log();
-        if (outWay != "待核实") {
+        if (outWay != "待确认") {
             document.getElementsByTagName("tr")[i].getElementsByTagName("td")[3].innerHTML += "<span class='inline-tag blue'>" + outWay + "</span>&nbsp;"
         } else {
             document.getElementsByTagName("tr")[i].getElementsByTagName("td")[3].innerHTML += "<span class='inline-tag green'>" + outWay + "</span>&nbsp;"
