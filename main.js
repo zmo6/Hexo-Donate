@@ -18,7 +18,7 @@ btn.addEventListener('click', function () {
         userDonate.value="";
         warnRes("打赏金额(0~9999.99)");
       	return;
-    } else if ((payWay.value != "微信") && (payWay.value != "支付宝")) {
+    } else if ((payWay.value != "微信") && (payWay.value != "支付宝") && (payWay.value != "QQ")) {
         payWay.value="";
         warnRes("打赏方式有误");
       	return;

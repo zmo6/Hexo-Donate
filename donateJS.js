@@ -11,19 +11,16 @@ $.get("https://YOURDOMAIN.com/getJsonData.php", function getData(data) {
     //获取table标签，将获取的数据插入
     var donate_tbody = $("table")[0];
     //构造字符串
-    //添加留言
     var temp = '<tr><td align="center"><a href="{url}" target="_blank" rel="noopener">{name}</a></td><td align="center">{pay_way}</td><td align="center">{userdonate}</td><td align="center">{donate_out}</td><td align="center">{donate_msg}</td></tr>';
     var STR = "<tbody>";
     for (var i = 0; i < donationInfo.length;
          i++) {
-        //添加留言
         var str = temp.replace("{url}", donationInfo[i].user_url).replace("{name}", donationInfo[i].user_name).replace("{pay_way}", donationInfo[i].pay_way).replace("{userdonate}", donationInfo[i].user_donate).replace("{donate_msg}", donationInfo[i].donate_msg);
         if (donationInfo[i].donate_confirm == "NO") {
             str = str.replace("{donate_out}", "待确认");
         } else {
             str = str.replace("{donate_out}", "投喂成功");
         }
-        //将投喂记录由新到旧排列
         STR = str + STR
     }
     STR += "</tbody>";
@@ -44,6 +41,8 @@ function beautiful() {
         var outWay = arrayList[i].getElementsByTagName("td")[3].innerHTML;
         if (payWay == "微信") {
             document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].style.color = "rgb(60,176,53)"
+        } else if (payWay == "QQ") {
+            document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].style.color = "rgb(220,20,60)"
         } else {
             document.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].style.color = "rgb(2,161,226)"
         }
@@ -57,6 +56,6 @@ function beautiful() {
         var donatMoney = arrayList[i].getElementsByTagName("td")[2].innerHTML;
         document.getElementsByTagName("tr")[i].getElementsByTagName("td")[2].innerHTML = donatMoney + "￥"
     }
-    nowDate = (nowDate.getMonth() + 1) + "/" + nowDate.getDate() + "/" + nowDate.getFullYear();
+    nowDate = nowDate.getFullYear() + "年" + (nowDate.getMonth() + 1) + "月" + nowDate.getDate() + "日";
     document.getElementsByTagName("p")[0].innerHTML = pageText.replace(/nowDate/, nowDate).replace(/personNum/, personNum).replace(/sumDonate/, sumDonate.toFixed(2))
 };
